@@ -1,0 +1,27 @@
+{
+  "name": "ephemeral-proxies",
+  "version": "1.0.0",
+  "description": "Ephemeral Proxies API Client Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpi4gx/ephemeral-proxies-npm.git"
+  },
+  "keywords": [
+    "proxies",
+    "api",
+    "ephemeral-proxies"
+  ],
+  "author": "rpi4gx@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpi4gx/ephemeral-proxies-npm/issues"
+  },
+  "homepage": "https://github.com/rpi4gx/ephemeral-proxies-npm#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
