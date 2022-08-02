@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/rpi4gx/ephemeral-proxies-npm/issues"
   },
-  "homepage": "https://github.com/rpi4gx/ephemeral-proxies-npm#readme",
+  "homepage": "https://www.ephemeral-proxies.net/",
   "dependencies": {
     "axios": "^0.27.2"
   }
