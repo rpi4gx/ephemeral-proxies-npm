@@ -1,6 +1,6 @@
 {
   "name": "ephemeral-proxies",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Ephemeral Proxies API Client Library",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/rpi4gx/ephemeral-proxies-npm/issues"
   },
-  "homepage": "https://www.ephemeral-proxies.net/",
+  "homepage": "https://www.ephemeral-proxies.net",
   "dependencies": {
     "axios": "^0.27.2"
   }
