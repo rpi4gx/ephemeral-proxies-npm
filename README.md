@@ -69,28 +69,41 @@ $ EP_RAPIDAPI_KEY=YOUR_API_KEY_HERE node main.js
 
 ### Library functions
 
-* getProxy(rapidApiKey) - Returns a new proxy. 
+* getProxy(countries, whitelistIp, rapidApiKey) - Returns a new proxy. 
 
-    *rapidApiKey* argument is optional. If unset, EP_RAPIDAPI_KEY environment variable is required.
+    *countries* argument is optional. A string array of [country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), that you would like the proxies to be located. If null or empty, country will be randomly selected.
+
+    *whitelistIp* argument is optional. The proxy will allow connections from the source ip that is making this API call. Additionally, you can allow an extra ip to connect to the proxy by using *whitelistIp* argument.
+
+    *rapidApiKey* argument is optional. If null or unset, EP_RAPIDAPI_KEY environment variable is required.
+    
+    Example:
     ```
     let proxy = ep.getProxy(rapidApiKey)
+    console.log(proxy)
     ```
 
 
 * getServiceStatus(rapidApiKey) - Retrieves API service status.
 
-    *rapidApiKey* argument is optional. If unset, EP_RAPIDAPI_KEY environment variable is required.
+    *rapidApiKey* argument is optional. If null or unset, EP_RAPIDAPI_KEY environment variable is required.
+
+    Example:
     ```
     let service = ep.getServiceStatus(rapidApiKey)
+    console.log(service)
     ```
 
 
-* extendProxy(proxyId, rapidApiKey) - Extends expiration time of proxy.
+* extendProxy(proxyId, rapidApiKey) - Extends expiration time of proxy by 30 minutes.
 
     *proxyId* argument is required. Id of proxy to extend.
 
-    *rapidApiKey* argument is optional. If unset, EP_RAPIDAPI_KEY environment variable is required.
+    *rapidApiKey* argument is optional. If null or unset, EP_RAPIDAPI_KEY environment variable is required.
+
+    Example:
     ```
     let proxy = ep.getProxy(rapidApiKey)
-    let proxyExtended = ep.extendProxy(proxy.id, rapidApiKey)()
+    let proxyExtended = ep.extendProxy(proxy.id, rapidApiKey)
+    console.log(proxyExtended)
     ```

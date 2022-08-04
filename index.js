@@ -7,7 +7,8 @@ var EpDefaultOptions = {
     headers: {
       'X-RapidAPI-Key': '',
       'X-RapidAPI-Host': 'ephemeral-proxies.p.rapidapi.com'
-    }
+    },
+    params: {}
 }
 
 function getOptions(method, url, key) {
@@ -41,10 +42,16 @@ function getServiceStatus(apiKey) {
     })
 }
 
-function getProxy(apiKey) {
+function getProxy(countries, whitelistIp, apiKey) {
     return new Promise((resolve, reject) => {
         try {
             let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v1/proxy', apiKey)
+            if (countries !== undefined && countries && Array.isArray(countries) && countries.length > 0) {
+                Object.assign(options.params, {countries: countries.join(",")})
+            }
+            if (whitelistIp !== undefined && whitelistIp.length > 0) {
+                Object.assign(options.params, {whitelist_ip: whitelistIp})
+            }
             axios.request(options).then(function (response) {
             	resolve(response.data);
             }).catch(function (error) {
