@@ -1,6 +1,6 @@
 {
   "name": "ephemeral-proxies",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Ephemeral Proxies API Client Library",
   "main": "index.js",
   "scripts": {
