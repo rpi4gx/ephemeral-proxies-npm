@@ -16,7 +16,7 @@ const ep = require('ephemeral-proxies');
 
 (async function main() {
     try {
-        let proxy = await ep.getProxy()
+        let proxy = await ep.getProxy(ep.ProxyType.datacenter)
         console.log(proxy)
     } catch (e) {
         console.warn(e)
@@ -69,7 +69,9 @@ $ EP_RAPIDAPI_KEY=YOUR_API_KEY_HERE node main.js
 
 ### Library functions
 
-* getProxy(countries, whitelistIp, rapidApiKey) - Returns a new proxy. 
+* getProxy(proxyType, countries, whitelistIp, rapidApiKey) - Returns a new proxy. 
+
+    *proxyType* is required. Set to `ep.ProxyType.datacenter` or `ep.ProxyType.residential` to select the proxy type.
 
     *countries* argument is optional. A string array of [country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), that you would like the proxies to be located. If null or empty, country will be randomly selected.
 
@@ -79,23 +81,25 @@ $ EP_RAPIDAPI_KEY=YOUR_API_KEY_HERE node main.js
     
     Example:
     ```
-    let proxy = ep.getProxy(rapidApiKey)
+    let proxy = ep.getProxy(ep.ProxyType.datacenter, rapidApiKey)
     console.log(proxy)
     ```
 
 
-* getServiceStatus(rapidApiKey) - Retrieves API service status.
+* getServiceStatus(proxyType, rapidApiKey) - Retrieves API service status.
+
+    *proxyType* is required. Set to `ep.ProxyType.datacenter` or `ep.ProxyType.residential` to select the proxy service.
 
     *rapidApiKey* argument is optional. If null or unset, EP_RAPIDAPI_KEY environment variable is required.
 
     Example:
     ```
-    let service = ep.getServiceStatus(rapidApiKey)
+    let service = ep.getServiceStatus(ep.ProxyType.residential, rapidApiKey)
     console.log(service)
     ```
 
 
-* extendProxy(proxyId, rapidApiKey) - Extends expiration time of proxy by 30 minutes.
+* extendProxy(proxyId, rapidApiKey) - Extends expiration time of Datacenter Proxy by 30 minutes.
 
     *proxyId* argument is required. Id of proxy to extend.
 
@@ -106,4 +110,13 @@ $ EP_RAPIDAPI_KEY=YOUR_API_KEY_HERE node main.js
     let proxy = ep.getProxy(rapidApiKey)
     let proxyExtended = ep.extendProxy(proxy.id, rapidApiKey)
     console.log(proxyExtended)
+    ```
+
+
+* getUserBalance(rapidApiKey) - Get information about Residential traffic's usage.
+
+    Example:
+    ```
+    let balance = ep.getUserBalance(rapidApiKey)
+    console.log(balance)
     ```

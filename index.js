@@ -11,6 +11,11 @@ var EpDefaultOptions = {
     params: {}
 }
 
+const ProxyType = {
+    datacenter: "datacenter",
+    residential: "residential"
+}
+
 function getOptions(method, url, key) {
     if (key === undefined && process.env[EpEnvVar] && process.env[EpEnvVar].length > 0) {
         key = process.env[EpEnvVar]
@@ -27,10 +32,13 @@ function getOptions(method, url, key) {
     return options
 }
 
-function getServiceStatus(apiKey) {
+function getServiceStatus(proxyType, apiKey) {
     return new Promise((resolve, reject) => {
         try {
-            let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v1/service_status', apiKey)
+            if (proxyType === undefined) {
+                throw new Error('Proxy Type argument is required')
+            }
+            let options = getOptions('GET', `https://ephemeral-proxies.p.rapidapi.com/v2/${proxyType}/service_status`, apiKey)
             axios.request(options).then(function (response) {
             	resolve(response.data);
             }).catch(function (error) {
@@ -42,10 +50,13 @@ function getServiceStatus(apiKey) {
     })
 }
 
-function getProxy(countries, whitelistIp, apiKey) {
+function getProxy(proxyType, countries, whitelistIp, apiKey) {
     return new Promise((resolve, reject) => {
         try {
-            let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v1/proxy', apiKey)
+            if (proxyType === undefined) {
+                throw new Error('Proxy Type argument is required')
+            }
+            let options = getOptions('GET', `https://ephemeral-proxies.p.rapidapi.com/v2/${proxyType}/proxy`, apiKey)
             if (countries !== undefined && countries && Array.isArray(countries) && countries.length > 0) {
                 Object.assign(options.params, {countries: countries.join(",")})
             }
@@ -66,7 +77,7 @@ function getProxy(countries, whitelistIp, apiKey) {
 function extendProxy(proxyId, apiKey) {
     return new Promise((resolve, reject) => {
         try {
-            let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v1/extend_proxy', apiKey)
+            let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v2/datacenter/extend_proxy', apiKey)
             options['params'] = {
                 id: proxyId
             }
@@ -81,6 +92,24 @@ function extendProxy(proxyId, apiKey) {
     })
 }
 
+function getUserBalance(apiKey) {
+    return new Promise((resolve, reject) => {
+        try {
+            let options = getOptions('GET', 'https://ephemeral-proxies.p.rapidapi.com/v2/residential/balance', apiKey)
+            options['params'] = {}
+            axios.request(options).then(function (response) {
+            	resolve(response.data);
+            }).catch(function (error) {
+            	reject(error);
+            });
+        } catch(e) {
+            reject(e)
+        }
+    })
+}
+
 exports.getServiceStatus = getServiceStatus;
 exports.getProxy = getProxy;
 exports.extendProxy = extendProxy;
+exports.getUserBalance = getUserBalance;
+exports.ProxyType = ProxyType;
